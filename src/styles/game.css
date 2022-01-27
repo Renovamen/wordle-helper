@@ -1,0 +1,48 @@
+body {
+  @apply text-center my-0 mx-auto max-w-lg;
+  font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.correct,
+.present,
+.absent {
+  @apply text-white !important;
+}
+
+.correct {
+  background-color: #6aaa64 !important;
+}
+
+.present {
+  background-color: #c9b458 !important;
+}
+
+.absent {
+  background-color: #787c7e !important;
+}
+
+#board {
+  --height: min(420px, calc(var(--vh, 100vh) - 280px));
+  height: var(--height);
+  width: min(350px, calc(var(--height) / 6 * 5));
+}
+
+@media (max-height: 550px) {
+  .tile {
+    @apply text-xl;
+  }
+}
+
+@media (max-height: 450px) {
+  .tile {
+    @apply text-xs;
+  }
+}
+
+.keyboard .spacer {
+  flex: 0.5;
+}
+
+.keyboard button.big {
+  flex: 1.5;
+}
