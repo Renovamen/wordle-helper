@@ -4,14 +4,19 @@ const checkWord = (
   letters: string[],
   board: Array<Array<TileType>>
 ): boolean => {
-  // for each tried word (row in board)
+  // for each candidate word (row in board)
   for (const row of board) {
+    // used ground truth letter should not be counted again
+    const used: { [key: number]: boolean } = {};
+
     // check correct (green)
     // should be in the correct spot
     for (const i in row) {
       const tile = row[i];
-      if (tile.state === LetterState.CORRECT && tile.letter !== letters[i])
-        return false;
+      if (tile.state === LetterState.CORRECT) {
+        if (tile.letter !== letters[i]) return false;
+        used[i] = true;
+      }
     }
 
     // check present (yellow)
@@ -24,9 +29,10 @@ const checkWord = (
 
         // should appears in other letters
         let isPresent = false;
-        for (const letter of letters) {
-          if (letter === tile.letter) {
+        for (const j in letters) {
+          if (letters[j] === tile.letter && !used[j]) {
             isPresent = true;
+            used[j] = true;
             break;
           }
         }
@@ -39,8 +45,8 @@ const checkWord = (
     for (const i in row) {
       const tile = row[i];
       if (tile.state === LetterState.ABSENT) {
-        for (const letter of letters) {
-          if (letter === tile.letter) {
+        for (const j in letters) {
+          if (letters[j] === tile.letter && !used[j]) {
             return false;
           }
         }
