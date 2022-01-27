@@ -6,7 +6,9 @@
     ]"
   >
     <div class="w-64 h-full bg-white border-l border-gray-300 overflow-scroll">
-      <div class="text-lg font-medium py-2 border-b border-gray-300 w-56 mx-auto">
+      <div
+        class="text-lg font-medium py-2 border-b border-gray-300 w-56 mx-auto"
+      >
         Possible Words
       </div>
       <div class="py-2 px-4">
@@ -32,15 +34,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue";
 
-const props = defineProps<{
-  words: string[]
-}>()
+defineProps<{
+  words: string[];
+}>();
 
 defineEmits<{
-  (e: 'choose', word: string): void
-}>()
+  (e: "choose", word: string): void;
+}>();
 
 const isOpen = ref(true);
 </script>

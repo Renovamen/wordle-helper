@@ -1,7 +1,8 @@
-import { LetterState, TileType } from '../types'
+import { LetterState, TileType } from "../types";
 
 const checkWord = (
-  letters: string[], board: Array<Array<TileType>>
+  letters: string[],
+  board: Array<Array<TileType>>
 ): boolean => {
   // for each tried word (row in board)
   for (const row of board) {
@@ -24,12 +25,12 @@ const checkWord = (
         // should appears in other letters
         let isPresent = false;
         for (const letter of letters) {
-          if (letter  === tile.letter) {
+          if (letter === tile.letter) {
             isPresent = true;
             break;
           }
         }
-        if(!isPresent) return false;
+        if (!isPresent) return false;
       }
     }
 
@@ -48,18 +49,19 @@ const checkWord = (
   }
 
   return true;
-}
+};
 
 export const guessPossibleWords = (
-  pool: string[], board: Array<Array<TileType>>
+  pool: string[],
+  board: Array<Array<TileType>>
 ) => {
   const possibleWords: string[] = [];
 
   // for each word in dictionary
   pool.forEach((word) => {
-    const letters: string[] = word.split('');
+    const letters: string[] = word.split("");
     if (checkWord(letters, board)) possibleWords.push(word);
-  })
+  });
 
   return possibleWords;
-}
+};

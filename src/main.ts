@@ -1,6 +1,6 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import './styles'
+import { createApp } from "vue";
+import App from "./App.vue";
+import "./styles";
 
 import { OhVueIcon, addIcons } from "oh-vue-icons";
 import {
@@ -17,16 +17,16 @@ addIcons(
   BiCaretLeft,
   BiCaretRight,
   MdRefresh
-)
+);
 
 // resize for scaling the board size
-window.addEventListener('resize', onResize)
+window.addEventListener("resize", onResize);
 // set size on startup
-onResize()
+onResize();
 
 function onResize() {
   // get actual vh on mobile
-  document.body.style.setProperty('--vh', window.innerHeight + 'px')
+  document.body.style.setProperty("--vh", window.innerHeight + "px");
 }
 
 const app = createApp(App);

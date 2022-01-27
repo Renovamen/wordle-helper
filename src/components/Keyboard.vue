@@ -1,11 +1,11 @@
 <template>
   <div class="keyboard mt-4 mx-2 select-none">
     <div
-      class="flex w-full touch-manipulation mx-auto mb-2"
       v-for="(row, i) in rows"
       :key="`row-${i}`"
+      class="flex w-full touch-manipulation mx-auto mb-2"
     >
-      <div class="spacer" v-if="i === 1"></div>
+      <div v-if="i === 1" class="spacer"></div>
       <button
         v-for="key in row"
         :key="key"
@@ -16,25 +16,25 @@
         <span v-if="key !== 'Backspace'">{{ key }}</span>
         <v-icon v-else name="md-backspace-outlined" scale="1.2" />
       </button>
-      <div class="spacer" v-if="i === 1"></div>
+      <div v-if="i === 1" class="spacer"></div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { LetterState } from '../types'
+import { LetterState } from "../types";
 
 defineProps<{
-  letterStates: Record<string, LetterState>
-}>()
+  letterStates: Record<string, LetterState>;
+}>();
 
 defineEmits<{
-  (e: 'key', key: string): void
-}>()
+  (e: "key", key: string): void;
+}>();
 
 const rows = [
-  'qwertyuiop'.split(''),
-  'asdfghjkl'.split(''),
-  ['Enter', ...'zxcvbnm'.split(''), 'Backspace']
-]
+  "qwertyuiop".split(""),
+  "asdfghjkl".split(""),
+  ["Enter", ..."zxcvbnm".split(""), "Backspace"]
+];
 </script>

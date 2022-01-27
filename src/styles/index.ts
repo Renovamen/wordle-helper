@@ -1,3 +1,3 @@
-import './tailwind.css'
-import './animation.css'
-import './game.css'
+import "./tailwind.css";
+import "./animation.css";
+import "./game.css";
