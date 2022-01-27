@@ -44,5 +44,5 @@ defineEmits<{
   (e: "choose", word: string): void;
 }>();
 
-const isOpen = ref(true);
+const isOpen = ref(window.innerWidth <= 768 ? false : true);
 </script>
