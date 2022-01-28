@@ -8,6 +8,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "nightwind": "^1.1.12",
     "oh-vue-icons": "^1.0.0-rc2",
     "vue": "^3.2.25"
   },

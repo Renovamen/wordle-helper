@@ -1160,6 +1160,11 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
 
+nightwind@^1.1.12:
+  version "1.1.12"
+  resolved "https://registry.yarnpkg.com/nightwind/-/nightwind-1.1.12.tgz#ee8147abd41746b19e85916ca5ff92e6fd05621b"
+  integrity sha512-iJGJxeglk3vrRyFDH7shinvKuN/EcIbBtNVkko0Zni/XGVSHrBH0rsvqgp2HhkIf5B7iZU+2+kGhS2oItBnASQ==
+
 node-releases@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.1.tgz#3d1d395f204f1f2f29a54358b9fb678765ad2fc5"

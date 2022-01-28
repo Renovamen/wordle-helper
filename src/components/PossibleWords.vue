@@ -7,7 +7,7 @@
   >
     <div class="w-64 h-full bg-white border-l border-gray-300 overflow-scroll">
       <div
-        class="text-lg font-medium py-2 border-b border-gray-300 w-56 mx-auto"
+        class="text-lg text-black font-medium py-2 border-b border-gray-300 w-56 mx-auto"
       >
         Possible Words
       </div>
@@ -15,7 +15,7 @@
         <div
           v-for="(word, index) in words"
           :key="index"
-          class="leading-7 cursor-pointer hover:bg-gray-100 rounded-md"
+          class="leading-7 cursor-pointer text-black hover:bg-gray-100 rounded-md"
           @click="$emit('choose', word)"
         >
           {{ word }}

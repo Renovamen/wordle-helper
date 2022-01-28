@@ -8,7 +8,10 @@ import {
   RiGithubLine,
   BiCaretLeft,
   BiCaretRight,
-  MdRefresh
+  MdRefresh,
+  HiSun,
+  HiMoon,
+  FaRegularQuestionCircle
 } from "oh-vue-icons/icons";
 
 addIcons(
@@ -16,7 +19,10 @@ addIcons(
   RiGithubLine,
   BiCaretLeft,
   BiCaretRight,
-  MdRefresh
+  MdRefresh,
+  HiSun,
+  HiMoon,
+  FaRegularQuestionCircle
 );
 
 // resize for scaling the board size

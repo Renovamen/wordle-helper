@@ -2,7 +2,8 @@
   <Transition>
     <div
       v-if="message"
-      class="absolute text-white bg-black/75 left-1/2 top-20 z-10 rounded font-semibold py-3 px-5 -translate-x-1/2 duration-300"
+      id="message"
+      class="message absolute text-white left-1/2 top-20 z-10 rounded font-semibold py-3 px-5 -translate-x-1/2 duration-300"
     >
       {{ message }}
       <pre v-if="grid">{{ grid }}</pre>
@@ -10,23 +11,40 @@
   </Transition>
 
   <header class="relative border-b border-gray-300 mb-4">
-    <h1 class="text-2xl sm:text-3xl font-bold my-2">WORDLE HELPER</h1>
+    <h1 class="text-2xl sm:text-3xl text-black font-bold my-2">
+      WORDLE HELPER
+    </h1>
 
-    <div class="absolute top-1.5 right-4 text-gray-400">
+    <div class="absolute top-1.5 left-4 text-gray-400 flex">
       <v-icon
-        name="md-refresh"
+        name="fa-regular-question-circle"
         scale="1.2"
-        class="mr-1 cursor-pointer"
-        @click="clearAllTiles"
+        class="cursor-pointer"
       />
 
       <a
-        class=""
+        class="ml-1"
         href="https://github.com/Renovamen/wordle-helper"
         target="_blank"
       >
         <v-icon name="ri-github-line" scale="1.2" />
       </a>
+    </div>
+
+    <div class="absolute top-1.5 right-4 text-gray-400">
+      <v-icon
+        :name="isDark ? 'hi-moon' : 'hi-sun'"
+        scale="1.2"
+        class="mr-1 cursor-pointer"
+        @click="toggleDark()"
+      />
+
+      <v-icon
+        name="md-refresh"
+        scale="1.2"
+        class="cursor-pointer"
+        @click="clearAllTiles"
+      />
     </div>
   </header>
 
@@ -44,7 +62,7 @@
         v-for="(tile, tileId) in row"
         :key="`${tile}-${tileId}`"
         :class="[
-          'tile relative w-full text-3xl font-medium align-middle uppercase select-none box-border inline-flex justify-center items-center duration-300 border-2 border-gray-300',
+          'tile relative w-full text-black text-3xl font-medium align-middle uppercase select-none box-border inline-flex justify-center items-center duration-300 border-2 border-gray-300',
           tile.letter && 'border-gray-500 zoom',
           tile.state && 'border-none',
           tile.state
@@ -62,7 +80,8 @@
 </template>
 
 <script setup lang="ts">
-import { onUnmounted, ref, computed } from "vue";
+import { onMounted, onUnmounted, ref, computed } from "vue";
+import nightwind from "nightwind/helper";
 import { allWords, guessPossibleWords } from "./utils";
 import Keyboard from "./components/Keyboard.vue";
 import PossibleWords from "./components/PossibleWords.vue";
@@ -88,10 +107,23 @@ const grid = ref("");
 const shakeRowIndex = ref(-1);
 const success = ref(false);
 
+// Dark mode
+const isDark = ref(false);
+
+const toggleDark = (value = !isDark.value) => {
+  isDark.value = value;
+  nightwind.enable(value);
+};
+
+// List of all possible words
 const possibleWords = ref<string[]>([]);
 
 // Keep track of revealed letters for the virtual keyboard
 const letterStates = ref<Record<string, LetterState>>({});
+
+onMounted(() => {
+  nightwind.init();
+});
 
 const onKeyup = (e: KeyboardEvent) => onKey(e.key);
 

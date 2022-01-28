@@ -1,5 +1,5 @@
 <template>
-  <div class="keyboard mt-4 mx-2 select-none">
+  <div id="keyboard" class="mt-4 mx-2 select-none">
     <div
       v-for="(row, i) in rows"
       :key="`row-${i}`"
@@ -9,8 +9,12 @@
       <button
         v-for="key in row"
         :key="key"
-        class="font-bold mr-1.5 h-14 rounded cursor-pointer select-none bg-gray-300 text-black text-sm flex-1 flex justify-center items-center uppercase duration-500"
-        :class="[key.length > 1 && 'big', letterStates[key]]"
+        class="font-bold mr-1.5 h-14 rounded cursor-pointer select-none bg-gray-300 text-black flex-1 flex justify-center items-center uppercase duration-500"
+        :class="[
+          key === 'Enter' ? 'text-xs sm:text-sm' : 'text-sm',
+          key.length > 1 && 'big',
+          letterStates[key]
+        ]"
         @click="$emit('key', key)"
       >
         <span v-if="key !== 'Backspace'">{{ key }}</span>
