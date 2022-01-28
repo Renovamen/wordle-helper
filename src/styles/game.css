@@ -35,14 +35,18 @@ body {
   background-color: rgba(255, 255, 255, 0.85);
 }
 
+.tile {
+  @apply relative text-black font-semibold uppercase select-none box-border inline-flex justify-center items-center border-2 border-gray-300;
+}
+
 @media (max-height: 550px) {
-  .tile {
+  #board .tile {
     @apply text-xl;
   }
 }
 
 @media (max-height: 450px) {
-  .tile {
+  #board .tile {
     @apply text-xs;
   }
 }
@@ -53,4 +57,8 @@ body {
 
 #keyboard button.big {
   flex: 1.5;
+}
+
+.hyperlink {
+  @apply text-blue-600 hover:underline;
 }

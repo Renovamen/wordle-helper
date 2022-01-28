@@ -11,7 +11,8 @@ import {
   MdRefresh,
   HiSun,
   HiMoon,
-  FaRegularQuestionCircle
+  FaRegularQuestionCircle,
+  MdClose
 } from "oh-vue-icons/icons";
 
 addIcons(
@@ -22,7 +23,8 @@ addIcons(
   MdRefresh,
   HiSun,
   HiMoon,
-  FaRegularQuestionCircle
+  FaRegularQuestionCircle,
+  MdClose
 );
 
 // resize for scaling the board size
