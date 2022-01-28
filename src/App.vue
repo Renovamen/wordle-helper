@@ -1,9 +1,9 @@
 <template>
   <Transition>
     <div
-      v-if="message"
+      v-if="message !== ''"
       id="message"
-      class="message absolute text-white left-1/2 top-20 z-10 rounded font-semibold py-3 px-5 -translate-x-1/2 duration-300"
+      class="message absolute text-white left-1/2 top-20 z-10 rounded font-semibold py-3 px-5 -translate-x-1/2"
     >
       {{ message }}
       <pre v-if="grid">{{ grid }}</pre>
@@ -54,20 +54,19 @@
       :key="`${row}-${rowId}`"
       :class="[
         'grid grid-cols-5 gap-1',
-        shakeRowIndex === rowId && 'shake',
-        success && currentRowIndex === rowId && 'jump'
+        shakeRowIndex === rowId && 'shake'
       ]"
     >
       <div
         v-for="(tile, tileId) in row"
         :key="`${tile}-${tileId}`"
         :class="[
-          'tile relative w-full text-black text-3xl font-medium align-middle uppercase select-none box-border inline-flex justify-center items-center duration-300 border-2 border-gray-300',
+          'tile relative w-full text-black text-3xl font-semibold align-middle uppercase select-none box-border inline-flex justify-center items-center duration-300 border-2 border-gray-300 cursor-pointer',
           tile.letter && 'border-gray-500 zoom',
           tile.state && 'border-none',
           tile.state
         ]"
-        @click="changeTileState(tile)"
+        @click="changeTileState(tile, rowId)"
       >
         {{ tile.letter }}
       </div>
@@ -105,7 +104,6 @@ const currentRow = computed(() => board.value[currentRowIndex.value]);
 const message = ref("");
 const grid = ref("");
 const shakeRowIndex = ref(-1);
-const success = ref(false);
 
 // Dark mode
 const isDark = ref(false);
@@ -115,15 +113,18 @@ const toggleDark = (value = !isDark.value) => {
   nightwind.enable(value);
 };
 
+onMounted(() => {
+  nightwind.init();
+});
+
 // List of all possible words
 const possibleWords = ref<string[]>([]);
 
 // Keep track of revealed letters for the virtual keyboard
 const letterStates = ref<Record<string, LetterState>>({});
 
-onMounted(() => {
-  nightwind.init();
-});
+// Handle keyboard input
+const allowInput = ref(true);
 
 const onKeyup = (e: KeyboardEvent) => onKey(e.key);
 
@@ -134,6 +135,8 @@ onUnmounted(() => {
 });
 
 const onKey = (key: string) => {
+  if (!allowInput.value) return;
+
   if (/^[a-zA-Z]$/.test(key)) {
     fillTile(key.toLowerCase());
   } else if (key === "Backspace") {
@@ -172,6 +175,9 @@ const clearAllTiles = () => {
   currentRowIndex.value = 0;
   possibleWords.value = [];
   letterStates.value = {};
+  allowInput.value = true;
+  message.value = "";
+  grid.value = "";
 };
 
 const tileStateList = [
@@ -180,8 +186,9 @@ const tileStateList = [
   LetterState.CORRECT
 ];
 
-const changeTileState = (tile: TileType) => {
-  if (tile.letter === "") return; // can't set state before setting letter
+const changeTileState = (tile: TileType, rowId: number) => {
+  if (rowId < currentRowIndex.value) return;  // Can't set state for previous tiles
+  if (tile.letter === "") return; // Can't set state before setting letter
   const currentIndex = tile.state ? tileStateList.indexOf(tile.state) : -1;
   const nextIndex = (currentIndex + 1) % tileStateList.length;
   tile.state = tileStateList[nextIndex];
@@ -217,8 +224,25 @@ const guessWords = () => {
     board.value.slice(0, currentRowIndex.value + 1)
   );
 
-  // go the next row
-  currentRowIndex.value++;
+  allowInput.value = false;
+
+  if (currentRow.value.every((tile) => tile.state === LetterState.CORRECT)) {
+    // Already success
+    grid.value = genResultGrid();
+    showMessage(
+      ['Genius', 'Magnificent', 'Impressive', 'Splendid', 'Great', 'Phew'][
+        currentRowIndex.value
+      ],
+      -1
+    )
+  } else if (currentRowIndex.value < board.value.length - 1) {
+    // Go the next row
+    currentRowIndex.value++
+    allowInput.value = true;
+  } else {
+    // Game over
+    showMessage("Don't give up!", -1);
+  }
 };
 
 const chossPossibleWord = (word: string) => {
