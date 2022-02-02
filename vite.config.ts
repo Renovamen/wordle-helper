@@ -7,5 +7,8 @@ export default defineConfig({
     vue({
       reactivityTransform: true
     })
-  ]
+  ],
+  optimizeDeps: {
+    exclude: ["oh-vue-icons/icons"]
+  }
 });
