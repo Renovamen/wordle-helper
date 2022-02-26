@@ -45,6 +45,7 @@
       <v-icon
         name="md-refresh"
         scale="1.2"
+        :animation="isGameOver && 'flash'"
         class="cursor-pointer"
         @click="clearAllTiles"
       />
@@ -134,6 +135,9 @@ const letterStates = ref<Record<string, LetterState>>({});
 // Handle keyboard input
 const allowInput = ref(true);
 
+// Game over or not?
+const isGameOver = ref(false);
+
 const onKeyup = (e: KeyboardEvent) => onKey(e.key);
 
 window.addEventListener("keyup", onKeyup);
@@ -184,6 +188,7 @@ const clearAllTiles = () => {
   possibleWords.value = [];
   letterStates.value = {};
   allowInput.value = true;
+  isGameOver.value = false;
   message.value = "";
   grid.value = "";
 };
@@ -234,7 +239,11 @@ const guessWords = () => {
 
   allowInput.value = false;
 
-  if (currentRow.value.every((tile) => tile.state === LetterState.CORRECT)) {
+  if (possibleWords.value.length === 0) {
+    // No possible words, something wrong
+    showMessage("No possible words, something wrong.", -1);
+    isGameOver.value = true;
+  } else if (currentRow.value.every((tile) => tile.state === LetterState.CORRECT)) {
     // Already success
     grid.value = genResultGrid();
     showMessage(
@@ -250,6 +259,7 @@ const guessWords = () => {
   } else {
     // Game over
     showMessage("Don't give up!", -1);
+    isGameOver.value = true;
   }
 };
 
